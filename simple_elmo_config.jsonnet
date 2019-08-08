@@ -1,7 +1,7 @@
 local num_epochs = 10;
 local device = 1;
 local pos_dim = 50;
-local elmo_path = "/local/mlinde/elmo/";
+local elmo_path = "/local/mlinde/elmo/"; #TODO change this
 local encoder_output_dim = 512;
 local train_data = "data/en_ewt-ud-train.conllu";
 local dev_data = "data/en_ewt-ud-dev.conllu";
@@ -37,7 +37,6 @@ local data_iterator = {
             "label_dim": 256,
             "edge_dim": 256,
             #"activation" : "tanh",
-            "dropout": 0.1,
         },
         "loss_function" : {
             "existence_loss" : { "type" : "kg_edge_loss", "normalize_wrt_seq_len": false},
@@ -48,7 +47,7 @@ local data_iterator = {
         "encoder": {
             "type": "lstm",
             "bidirectional" : true,
-            "num_layers" : 2,
+            "num_layers" : 1,
             "hidden_size": encoder_output_dim,
             "input_size": 1024 + pos_dim
         },

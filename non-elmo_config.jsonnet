@@ -38,7 +38,6 @@ local data_iterator = {
             "label_dim": 256,
             "edge_dim": 256,
             #"activation" : "tanh",
-            "dropout": 0.1,
         },
         "loss_function" : {
             "existence_loss" : { "type" : "kg_edge_loss", "normalize_wrt_seq_len": false},

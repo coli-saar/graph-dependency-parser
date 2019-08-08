@@ -2,7 +2,6 @@ from allennlp.nn.util import get_range_vector
 from allennlp.nn.util import get_device_of
 import torch
 from allennlp.data import Vocabulary
-from allennlp.modules import InputVariationalDropout
 from allennlp.nn.activations import Activation
 import numpy as np
 
@@ -18,7 +17,6 @@ class KGEdges(EdgeModel):
                  encoder_dim:int,
                  label_dim:int,
                  edge_dim:int,
-                 dropout: float,
                  activation : Activation = None) -> None:
         """
             Parameters
@@ -61,7 +59,6 @@ class KGEdges(EdgeModel):
 
         self.label_out_layer = torch.nn.Linear(edge_dim, num_labels) #output layer for edge labels
 
-        self._dropout = InputVariationalDropout(dropout)
 
     def encoder_dim(self):
         return self._encoder_dim
@@ -86,8 +83,8 @@ class KGEdges(EdgeModel):
         float_mask = mask.float()
 
         # shape (batch_size, sequence_length, arc_representation_dim)
-        head_arc_representation = self._dropout(self.head_arc_feedforward(encoded_text))
-        child_arc_representation = self._dropout(self.child_arc_feedforward(encoded_text))
+        head_arc_representation = self.head_arc_feedforward(encoded_text)
+        child_arc_representation = self.child_arc_feedforward(encoded_text)
 
         bs,sl,arc_dim = head_arc_representation.size()
 
@@ -128,8 +125,8 @@ class KGEdges(EdgeModel):
             for each given arc.
         """
         # shape (batch_size, sequence_length, tag_representation_dim)
-        head_label_representation = self._dropout(self.head_label_feedforward(encoded_text))
-        child_label_representation = self._dropout(self.child_label_feedforward(encoded_text))
+        head_label_representation = self.head_label_feedforward(encoded_text)
+        child_label_representation = self.child_label_feedforward(encoded_text)
 
         batch_size = head_label_representation.size(0)
         # shape (batch_size,)
