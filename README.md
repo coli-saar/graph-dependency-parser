@@ -16,7 +16,7 @@ It is best, to set up a conda environment.
 __Internal note: use /proj/irtg.shadow/conda/envs/allennlp__
 
 ### Running the code
-Two example configurations are provided (.jsonnet files). To see if everything's working and to train a parser (on the EWT corpus), run:
+Three example configurations are provided (.jsonnet files). To see if everything's working and to train a parser (on the English EWT corpus), run:
 
 ```bash
 mkdir -p data/
@@ -24,6 +24,7 @@ cd data/
 wget https://github.com/UniversalDependencies/UD_English-EWT/raw/master/en_ewt-ud-train.conllu
 wget https://github.com/UniversalDependencies/UD_English-EWT/raw/master/en_ewt-ud-dev.conllu
 
+cd ../
 mkdir -p models/
 bash example_train.sh
 
